@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 
-const employee = require("./class/Employee");
+const Employee = require("./class/Employee");
 const Manager = require("./class/Manager");
 const Engineer = require("./class/Engineer");
 const Intern = require("./class/Intern");
@@ -34,14 +34,14 @@ function createMembers() {
             name: "email"
         },
         {
-            type: "List",
+            type: "list",
             question: "job title?",
             choices: [
                 "Manager",
                 "Engineer",
                 "Intern"
             ],
-            name: "title"
+            name: "job"
         }
     ];
 
@@ -84,37 +84,38 @@ function promptIntern() {
 async function start() {
     let newMember = [];
     const count = 4;
-    for (i = 0; i < count; i++) {
+    for (let i = 0; i < count; i++) {
         let promise = new Promise((resolve, reject) => {
-            createMembers()
-                .then(function({ name, id, email, title }) {
 
-                    if (title === "Manager") {
-                        promptManager().then(function(officeNumber) {
-                            this.employee = new Manager(name, id, email, number);
+            createMembers()
+                .then(function({ name, id, email, job }) {
+
+                    if (job === "Manager") {
+                        promptManager().then(function({ number }) {
+                            let employee = new Manager(name, id, email, number);
                             console.log(number);
                             newMember.push(employee);
-                            resolve("done");
+                            resolve("complete");
                         });
 
-                    } else if (title === "Engineer") {
+                    } else if (job === "Engineer") {
                         promptEngineer().then(function({ github }) {
-                            this.employee = new Engineer(name, id, email, github);
+                            let employee = new Engineer(name, id, email, github);
                             console.log(github);
                             newMember.push(employee);
-                            resolve("done");
+                            resolve("complete");
                         });
-                    } else if (title === "Intern") {
+                    } else if (job === "Intern") {
                         promptIntern().then(function({ school }) {
-                            this.employee = new Intern(name, id, email, school);
+                            let employee = new Intern(name, id, email, school);
                             console.log(school);
                             newMember.push(employee);
-                            resolve("done");
+                            resolve("complete");
                         });
                     }
 
                 }).catch(function(err) {
-                    console.log("There was an error.");
+                    console.log("error.");
                     console.log(err);
                 });
         });
@@ -136,35 +137,39 @@ async function start() {
 </body>
 </html>`
 
-    console.log(employee)
     for (let i in newMember) {
+        let employee;
         employee = newMember[i];
         console.log(employee);
-        let cardInfo = {
+        let cardInfo
+
+        cardInfo = {
             name: employee.getName(),
             role: employee.getRole(),
             id: employee.getId(),
             email: employee.getEmail()
-        }
+        };
 
-        if (employee.getRole() == "Engineer") {
-            cardInfo.github = employee.getGithub();
-        } else if (employee.getRole() == "Manager") {
+        if (employee.getRole() != "Engineer")
+            if (employee.getRole() != "Manager")
+                if (employee.getRole() == "Intern") {
+                    cardInfo.school = employee.getSchool();
+                } else {
+                    cardInfo.github = employee.getGithub();
+                }
+        else {
             cardInfo.number = employee.getNumber();
-        } else if (employee.getRole() == "Intern") {
-            cardInfo.school = employee.getSchool();
         }
 
         html += getHtml(cardInfo);
     }
-
     fs.writeFile('index.html', html, function(err) {
         if (!err) {
             debugger;
         } else {
             throw err;
         }
-        console.log('File was created successfully.');
+        console.log('HTML file created successfully.');
     });
 }
 

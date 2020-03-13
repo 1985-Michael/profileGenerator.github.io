@@ -1,0 +1,25 @@
+{
+    "name": "profilegenerator",
+    "version": "1.0.0",
+    "description": "Generates a Team Profile",
+    "main": "index.js",
+    "directories": {
+        "class": "class",
+        "test": "test"
+    },
+    "scripts": {
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/1985-Michael/profileGenerator.github.io"
+    },
+    "author": "Michael A Myers",
+    "license": "MIT",
+    "homepage": "https://github.com/1985-Michael/profileGenerator.github.io",
+    "dependencies": {
+        "inquirer": "^7.0.0",
+        "fs": "0.0.1-security",
+        "jest": "^24.9.0"
+    }
+}

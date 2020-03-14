@@ -13,10 +13,10 @@ formatted = number.replace(/(\d{1,2})(\d{1})?(\d{1,3})?(\d{1,4})?/,
     function(_, p1, p2, p3, p4) {
 
         let output = ""
-        if (p1) output = `(${p1}`;
-        if (p2) output += `${p2})`;
-        if (p3) output += ` ${p3}`
-        if (p4) output += ` ${p4}`
+        if (p1) output = '(' + p1;
+        if (p2) output += p2 + ')';
+        if (p3) output += ' ' + p3
+        if (p4) output += ' ' + p4
         return output;
     });
 
@@ -131,19 +131,89 @@ async function start() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Team Profile Generator</title>
     <style>
-       
-</body>
+    
+            h1 {
+            padding: 20px;
+            border-radius: 6px;
+            color: white;
+            margin: 12px;
+            text-align: center;
+            background-color: #555;
+        }
+
+            h2 {
+            font-size: 33px;
+            color: white;
+            background-color:  #555;   
+            line-height: 66px;
+            }   
+
+            .list-group-item+.list-group-item {
+             border-top-width: 1px;
+        }
+
+            .col-11 {
+            padding-right: 15px;
+            padding-left: 40px;
+        
+        }
+
+    </style>
+    </head>
+    
+<body>
+
+<h1>Team Members</h1>
+<ul>
+<div class="col-11">
+<h2>Manager</h2>
+<li class="list-group-item">Name: </li>
+<li class="list-group-item">ID: 1 </li>
+<li class="list-group-item">Email: </li>
+<li class="list-group-item">Number: </li>
+</ul>
+</div>
+<ul>
+<div class="col-11">
+<h2>Engineer</h2>
+<li class="list-group-item">Name: </li>
+<li class="list-group-item">ID: </li>
+<li class="list-group-item">Email: </li>
+<li class="list-group-item">Github: </li>
+</ul>
+</div>
+<div class="col-11">
+<ul>
+<h2>Engineer</h2>
+<li class="list-group-item">Name: </li>
+<li class="list-group-item">ID: </li>
+<li class="list-group-item">Email: </li>
+<li class="list-group-item">Github: </li>
+</ul>
+</div>
+<div class="col-11">
+<ul>
+<h2>Intern</h2>
+<li class="list-group-item">Name: </li>
+<li class="list-group-item">ID: </li>
+<li class="list-group-item">Email: </li>
+<li class="list-group-item">School: </li>
+</ul>
+</div>
+
+
+</body>   
 </html>`
 
     for (let i in newMember) {
         let employee;
         employee = newMember[i];
         console.log(employee);
-        let cardInfo
+        let employeeCards
 
-        cardInfo = {
+        employeeCards = {
             name: employee.getName(),
             role: employee.getRole(),
             id: employee.getId(),
@@ -151,17 +221,20 @@ async function start() {
         };
 
         if (employee.getRole() != "Engineer")
+
             if (employee.getRole() != "Manager")
+
                 if (employee.getRole() == "Intern") {
-                    cardInfo.school = employee.getSchool();
+
+                    employeeCards.school = employee.getSchool();
                 } else {
-                    cardInfo.github = employee.getGithub();
+                    employeeCards.github = employee.getGithub();
                 }
         else {
-            cardInfo.number = employee.getNumber();
+            employeeCards.number = employee.getNumber();
         }
 
-        html += getHtml(cardInfo);
+        html += getHtml(employeeCards);
     }
     fs.writeFile('index.html', html, function(err) {
         if (!err) {
@@ -175,7 +248,7 @@ async function start() {
 
 start()
 
-function getHtml(_cardInfo) {
+function getHtml(_employeeCards) {
     let html = "<div>";
     return html;
 }
